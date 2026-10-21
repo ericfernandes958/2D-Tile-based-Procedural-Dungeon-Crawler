@@ -1,5 +1,9 @@
 import pygame
 
+from asset_manager import AssetManager
+from renderer import Renderer
+
+
 WIN_WIDTH = 1280
 WIN_HEIGHT = 720
 
@@ -10,15 +14,19 @@ class Game:
         self.screen = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
         pygame.display.set_caption("Riftborn Realms")
 
-    def run(self):
-        running = True
+        self.assets = AssetManager()
+        self.renderer = Renderer(self.screen, self.assets)
 
-        while running:
+        self.running = True
+
+    def run(self):
+
+        while self.running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
+                    self.running = False
 
-            self.screen.fill((30, 30, 40))
+            self.renderer.draw()
             pygame.display.flip()
 
         pygame.quit
